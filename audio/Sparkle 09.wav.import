@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bsyn5dy6hb40j"
+path="res://.godot/imported/Sparkle 09.wav-6d4f4e09c2a119204190936f3b626558.sample"
+
+[deps]
+
+source_file="res://audio/Sparkle 09.wav"
+dest_files=["res://.godot/imported/Sparkle 09.wav-6d4f4e09c2a119204190936f3b626558.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

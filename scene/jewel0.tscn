@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://cxmd20hoycfy3"]
+
+[ext_resource type="Texture2D" uid="uid://x8cqf0ed7smm" path="res://assets/jewels_new.png" id="2_6iq5i"]
+[ext_resource type="Script" uid="uid://bqeh5yymoga0g" path="res://script/jewel.gd" id="2_fgdce"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fgdce"]
+size = Vector2(14, 14)
+
+[node name="Sprite2D" type="Area2D" unique_id=189854681]
+texture_filter = 1
+scale = Vector2(4, 4)
+script = ExtResource("2_fgdce")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1812198790]
+texture = ExtResource("2_6iq5i")
+region_enabled = true
+region_rect = Rect2(1, 18, 14, 13)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=580021469]
+visible = false
+shape = SubResource("RectangleShape2D_fgdce")

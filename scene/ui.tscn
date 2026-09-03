@@ -1,0 +1,250 @@
+[gd_scene format=3 uid="uid://kchh7fl85fwe"]
+
+[ext_resource type="FontFile" uid="uid://br27e21jav7gv" path="res://font/ARCADECLASSIC.TTF" id="1_onfsl"]
+[ext_resource type="Script" uid="uid://c5ico5s3tqltc" path="res://script/ui.gd" id="1_s2f8l"]
+[ext_resource type="Texture2D" uid="uid://der5vgawbci5q" path="res://assets/coin.png" id="3_kee8w"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_inyai"]
+bg_color = Color(0.24199143, 0.15879151, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bhunq"]
+bg_color = Color(0.7261458, 0.58133394, 0.12276965, 1)
+
+[node name="UI" type="CanvasLayer" unique_id=927575468]
+script = ExtResource("1_s2f8l")
+
+[node name="HUD" type="Control" parent="." unique_id=1983553467]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ComboLevel" type="Label" parent="HUD" unique_id=1206177668]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="TopBar" type="PanelContainer" parent="HUD" unique_id=10982028]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -978.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_inyai")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/TopBar" unique_id=1005514811]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="BlockScore" type="PanelContainer" parent="HUD/TopBar/HBoxContainer" unique_id=420485906]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/TopBar/HBoxContainer/BlockScore" unique_id=1656030396]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LabelScore" type="Label" parent="HUD/TopBar/HBoxContainer/BlockScore/VBoxContainer" unique_id=381657726]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("1_onfsl")
+theme_override_font_sizes/font_size = 40
+text = "SCORE"
+
+[node name="ScoreValue" type="Label" parent="HUD/TopBar/HBoxContainer/BlockScore/VBoxContainer" unique_id=495396210]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("1_onfsl")
+theme_override_font_sizes/font_size = 40
+
+[node name="BlockGems" type="PanelContainer" parent="HUD/TopBar/HBoxContainer" unique_id=1854971476]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/TopBar/HBoxContainer/BlockGems" unique_id=2097129425]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LabelGems" type="Label" parent="HUD/TopBar/HBoxContainer/BlockGems/VBoxContainer" unique_id=1924579442]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_onfsl")
+theme_override_font_sizes/font_size = 40
+text = "GEMS"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/TopBar/HBoxContainer/BlockGems/VBoxContainer" unique_id=1978884456]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="HUD/TopBar/HBoxContainer/BlockGems/VBoxContainer/HBoxContainer" unique_id=2060678859]
+layout_mode = 2
+texture = ExtResource("3_kee8w")
+expand_mode = 2
+
+[node name="CurrencyValue" type="Label" parent="HUD/TopBar/HBoxContainer/BlockGems/VBoxContainer/HBoxContainer" unique_id=1659427092]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("1_onfsl")
+theme_override_font_sizes/font_size = 40
+
+[node name="BlockLevel" type="PanelContainer" parent="HUD/TopBar/HBoxContainer" unique_id=1201932568]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/TopBar/HBoxContainer/BlockLevel" unique_id=886932623]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LabelLevel" type="Label" parent="HUD/TopBar/HBoxContainer/BlockLevel/VBoxContainer" unique_id=2083161872]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_onfsl")
+theme_override_font_sizes/font_size = 40
+text = "LEVEL"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/TopBar/HBoxContainer/BlockLevel/VBoxContainer" unique_id=1837306865]
+layout_mode = 2
+
+[node name="LevelValue" type="Label" parent="HUD/TopBar/HBoxContainer/BlockLevel/VBoxContainer/HBoxContainer" unique_id=35038466]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("1_onfsl")
+theme_override_font_sizes/font_size = 40
+
+[node name="ProgressBar" type="ProgressBar" parent="HUD/TopBar/HBoxContainer/BlockLevel/VBoxContainer/HBoxContainer" unique_id=431530594]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("1_onfsl")
+theme_override_font_sizes/font_size = 40
+
+[node name="MenuButton" type="Button" parent="HUD/TopBar/HBoxContainer/BlockLevel/VBoxContainer/HBoxContainer" unique_id=1314789294]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_onfsl")
+theme_override_font_sizes/font_size = 40
+text = "Menu"
+
+[node name="PlayerName" type="Label" parent="HUD/TopBar" unique_id=1635238950]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_onfsl")
+theme_override_font_sizes/font_size = 40
+text = "Hello"
+horizontal_alignment = 1
+
+[node name="MenuOverlay" type="ColorRect" parent="HUD" unique_id=1153465086]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.78431374)
+
+[node name="MenuPanel" type="PanelContainer" parent="HUD/MenuOverlay" unique_id=1441486331]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.0
+offset_top = -132.5
+offset_right = 140.0
+offset_bottom = 132.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/MenuOverlay/MenuPanel" unique_id=700879705]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="TitleLabel" type="Label" parent="HUD/MenuOverlay/MenuPanel/VBoxContainer" unique_id=1164757180]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_onfsl")
+theme_override_font_sizes/font_size = 40
+text = "ZenJewel"
+
+[node name="BtnWeiter" type="Button" parent="HUD/MenuOverlay/MenuPanel/VBoxContainer" unique_id=1006225782]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(240, 52)
+layout_mode = 2
+text = "Weiter"
+
+[node name="BtnExit" type="Button" parent="HUD/MenuOverlay/MenuPanel/VBoxContainer" unique_id=1962980360]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(240, 52)
+layout_mode = 2
+text = "Exit"
+
+[node name="BtnShop" type="Button" parent="HUD/MenuOverlay/MenuPanel/VBoxContainer" unique_id=1946035534]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(240, 52)
+layout_mode = 2
+text = "Shop"
+
+[node name="Label" type="Label" parent="HUD" unique_id=792354591]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -130.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("1_onfsl")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_bhunq")
+text = "ZenJewel"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="HUD/Label" unique_id=1103786077]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -70.5
+offset_top = -23.0
+offset_right = 71.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("1_onfsl")
+theme_override_font_sizes/font_size = 20
+text = "In Zen we trust"
+
+[node name="LevelOverlay" type="ColorRect" parent="." unique_id=1443038121]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.7058824)
+
+[node name="Label" type="Label" parent="LevelOverlay" unique_id=1720133756]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2

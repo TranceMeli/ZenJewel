@@ -1,0 +1,110 @@
+[gd_scene format=3 uid="uid://dd1nmsrims26x"]
+
+[ext_resource type="Script" uid="uid://ig7ioyessogk" path="res://main_menu.gd" id="1_3er1b"]
+[ext_resource type="Texture2D" uid="uid://x8cqf0ed7smm" path="res://assets/jewels_new.png" id="2_hxu56"]
+[ext_resource type="FontFile" uid="uid://br27e21jav7gv" path="res://font/ARCADECLASSIC.TTF" id="3_2fwvj"]
+
+[node name="MainMenu" type="Control" unique_id=1056385025]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3er1b")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1489788123]
+z_index = 2
+position = Vector2(145, 134)
+scale = Vector2(16.214285, 14.535724)
+texture = ExtResource("2_hxu56")
+region_enabled = true
+region_rect = Rect2(17, 1, 14, 14)
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=500431629]
+z_index = 2
+position = Vector2(136, 969)
+scale = Vector2(16.214285, 14.535724)
+texture = ExtResource("2_hxu56")
+region_enabled = true
+region_rect = Rect2(1, 4, 14, 11)
+
+[node name="Sprite2D3" type="Sprite2D" parent="." unique_id=1700602586]
+z_index = 2
+position = Vector2(1816.0001, 114)
+scale = Vector2(16.214285, 14.535724)
+texture = ExtResource("2_hxu56")
+region_enabled = true
+region_rect = Rect2(33, 1, 13, 15)
+
+[node name="Sprite2D4" type="Sprite2D" parent="." unique_id=967478164]
+z_index = 2
+position = Vector2(1774, 950)
+scale = Vector2(16.214285, 14.535724)
+texture = ExtResource("2_hxu56")
+region_enabled = true
+region_rect = Rect2(34, 18, 12, 12)
+
+[node name="Background" type="ColorRect" parent="." unique_id=1171723936]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.4203022, 0.27262327, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=218000140]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.45900002
+anchor_top = 0.432
+anchor_right = 0.45900002
+anchor_bottom = 0.432
+offset_left = -75.78003
+offset_top = -0.05999756
+offset_right = 233.21997
+offset_bottom = 146.94
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleLabel" type="Label" parent="VBoxContainer" unique_id=1346758466]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("3_2fwvj")
+theme_override_font_sizes/font_size = 60
+text = "ZenJewel"
+
+[node name="StartButton" type="Button" parent="VBoxContainer" unique_id=672355559]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_2fwvj")
+theme_override_font_sizes/font_size = 30
+text = "START"
+
+[node name="HighlightsButton" type="Button" parent="VBoxContainer" unique_id=1381564457]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_2fwvj")
+theme_override_font_sizes/font_size = 30
+text = "HIGHLIGHTS"
+
+[node name="ExitButton" type="Button" parent="VBoxContainer" unique_id=2034615081]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_2fwvj")
+theme_override_font_sizes/font_size = 30
+text = "EXIT"
+
+[node name="VersionsLabel" type="Label" parent="." unique_id=418128215]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -165.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("3_2fwvj")
+theme_override_font_sizes/font_size = 30
+text = "v.0.1"
+horizontal_alignment = 2

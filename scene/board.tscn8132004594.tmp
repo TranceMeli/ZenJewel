@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://ciumdsda0xm30"]
+
+[ext_resource type="Script" uid="uid://dyo830ec7qw5f" path="res://script/board.gd" id="1_b3264"]
+
+[node name="Board" type="Node2D"]
+script = ExtResource("1_b3264")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -1
+offset_right = 800.0
+offset_bottom = 800.0
+mouse_filter = 2
+color = Color(0.14767182, 0.14767179, 0.14767179, 1)
+
+[node name="JewelContainer" type="Node2D" parent="."]
