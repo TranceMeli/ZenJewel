@@ -30,9 +30,11 @@ func damage_cell(row: int, col: int) -> void:
 		return
 
 	board.grid[row][col] = null
+	board.effects.jewel_pop(jewel.position, jewel.type)
 
 	if jewel.special != SpecialType.Type.NONE:
 		board._play(board.sound_special)
+		board.effects.special_burst(jewel.position)
 		match jewel.special:
 			SpecialType.Type.LINE_H:
 				activate_line_h(row)
