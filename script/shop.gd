@@ -7,7 +7,7 @@ class_name Shop
 signal closed
 signal place_requested(id: String)
 
-const FONT  = preload("res://font/ARCADECLASSIC.TTF")
+const FONT  = preload("res://font/PressStart2P-Regular.ttf")
 const FRAME = preload("res://assets/zenjewel_UI.png")
 const COIN  = preload("res://assets/coin.png")
 
@@ -58,7 +58,7 @@ func _label(text: String, size: int, color: Color = UIStyle.TEXT) -> Label:
 	return l
 
 
-func _button(text: String, primary: bool = false, size: int = 28) -> Button:
+func _button(text: String, primary: bool = false, size: int = 16) -> Button:
 	var b = Button.new()
 	b.text = text
 	b.custom_minimum_size = Vector2(0, 56)
@@ -109,7 +109,7 @@ func _build() -> void:
 	var header = HBoxContainer.new()
 	header.add_theme_constant_override("separation", 16)
 	column.add_child(header)
-	header.add_child(_label("Shop", 64))
+	header.add_child(_label("Shop", 48))
 
 	_filter_row = HBoxContainer.new()
 	_filter_row.add_theme_constant_override("separation", 10)
@@ -126,10 +126,10 @@ func _build() -> void:
 	chip_row.add_theme_constant_override("separation", 10)
 	chip.add_child(chip_row)
 	chip_row.add_child(_coin(40))
-	_gems_label = _label("0", 44)
+	_gems_label = _label("0", 32)
 	chip_row.add_child(_gems_label)
 
-	var close = _button("X", false, 32)
+	var close = _button("X", false, 24)
 	close.custom_minimum_size   = Vector2(64, 56)
 	close.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	close.pressed.connect(_close)
@@ -155,7 +155,7 @@ func _build() -> void:
 		_grid.add_child(card)
 		_cards[id]["root"] = card
 
-	_toast = _label("", 32, UIStyle.GOLD)
+	_toast = _label("", 24, UIStyle.GOLD)
 	_toast.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_toast.modulate.a = 0.0
 	column.add_child(_toast)
@@ -164,7 +164,7 @@ func _build() -> void:
 	var hint = PanelContainer.new()
 	hint.add_theme_stylebox_override("panel", UIStyle.box(UIStyle.PANEL, Color(0, 0, 0, 0), 8, 0))
 	column.add_child(hint)
-	var hint_label = _label("Buy an item then press Place   Click to place   Click a placed item to remove it", 24, UIStyle.TEXT_DIM)
+	var hint_label = _label("Buy an item, then press Place. Click to place, click a placed item to remove it.", 16, UIStyle.TEXT_DIM)
 	hint_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	hint.add_child(hint_label)
 
@@ -175,7 +175,7 @@ func _build_filters() -> void:
 		return   # a filter is pointless with a single category
 	var options = [""] + cats
 	for option in options:
-		var b = _button("All" if option == "" else option, option == _filter, 26)
+		var b = _button("All" if option == "" else option, option == _filter, 16)
 		b.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 		b.custom_minimum_size   = Vector2(120, 48)
 		b.pressed.connect(_on_filter_pressed.bind(option))
@@ -209,7 +209,7 @@ func _build_card(id: String) -> Control:
 	icon.custom_minimum_size = Vector2(0, 180)
 	box.add_child(icon)
 
-	var name_label = _label(def.name, 36)
+	var name_label = _label(def.name, 24)
 	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	box.add_child(name_label)
 
@@ -218,10 +218,10 @@ func _build_card(id: String) -> Control:
 	price_row.add_theme_constant_override("separation", 8)
 	box.add_child(price_row)
 	price_row.add_child(_coin(32))
-	var price_label = _label(str(def.price), 32)
+	var price_label = _label(str(def.price), 24)
 	price_row.add_child(price_label)
 
-	var info_label = _label("", 24, UIStyle.TEXT_DIM)
+	var info_label = _label("", 16, UIStyle.TEXT_DIM)
 	info_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	box.add_child(info_label)
 

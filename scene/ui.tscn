@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://kchh7fl85fwe"]
 
-[ext_resource type="FontFile" uid="uid://br27e21jav7gv" path="res://font/ARCADECLASSIC.TTF" id="1_onfsl"]
+[ext_resource type="FontFile" path="res://font/PressStart2P-Regular.ttf" id="1_onfsl"]
 [ext_resource type="Script" uid="uid://c5ico5s3tqltc" path="res://script/ui.gd" id="1_s2f8l"]
 [ext_resource type="Texture2D" uid="uid://der5vgawbci5q" path="res://assets/coin.png" id="3_kee8w"]
 
@@ -113,7 +113,7 @@ layout_mode = 2
 size_flags_vertical = 4
 theme_override_colors/font_color = Color(0.165, 0.114, 0, 1)
 theme_override_fonts/font = ExtResource("1_onfsl")
-theme_override_font_sizes/font_size = 36
+theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_badge")
 text = "1"
 horizontal_alignment = 1
@@ -129,7 +129,7 @@ theme_override_constants/separation = 4
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85, 0.78, 0.6, 1)
 theme_override_fonts/font = ExtResource("1_onfsl")
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 16
 text = "Level"
 
 [node name="ProgressBar" type="ProgressBar" parent="HUD/TopBar/Row/LevelBlock/LevelInfo"]
@@ -143,20 +143,20 @@ show_percentage = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-theme_override_constants/separation = 0
+theme_override_constants/separation = 8
 
 [node name="ScoreCaption" type="Label" parent="HUD/TopBar/Row/ScoreBlock"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85, 0.78, 0.6, 1)
 theme_override_fonts/font = ExtResource("1_onfsl")
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 16
 text = "Score"
 horizontal_alignment = 1
 
 [node name="ScoreValue" type="Label" parent="HUD/TopBar/Row/ScoreBlock"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_onfsl")
-theme_override_font_sizes/font_size = 44
+theme_override_font_sizes/font_size = 32
 text = "0"
 horizontal_alignment = 1
 
@@ -186,7 +186,7 @@ stretch_mode = 5
 [node name="CurrencyValue" type="Label" parent="HUD/TopBar/Row/RightBlock/GemsChip/Row"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_onfsl")
-theme_override_font_sizes/font_size = 36
+theme_override_font_sizes/font_size = 24
 text = "0"
 
 [node name="MenuButton" type="Button" parent="HUD/TopBar/Row/RightBlock"]
@@ -210,7 +210,7 @@ grow_horizontal = 2
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.165, 0.114, 0, 1)
 theme_override_fonts/font = ExtResource("1_onfsl")
-theme_override_font_sizes/font_size = 44
+theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxFlat_pill")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -253,7 +253,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("1_onfsl")
-theme_override_font_sizes/font_size = 52
+theme_override_font_sizes/font_size = 40
 text = "Pause"
 
 [node name="PlayerName" type="Label" parent="HUD/MenuOverlay/MenuPanel/VBox/Header"]
@@ -262,7 +262,7 @@ layout_mode = 2
 size_flags_vertical = 8
 theme_override_colors/font_color = Color(0.85, 0.78, 0.6, 1)
 theme_override_fonts/font = ExtResource("1_onfsl")
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size = 16
 text = "Hello"
 
 [node name="BtnResume" type="Button" parent="HUD/MenuOverlay/MenuPanel/VBox"]
@@ -293,7 +293,7 @@ text = "Main menu"
 layout_mode = 2
 theme_override_colors/font_color = Color(0.66, 0.6, 0.41, 1)
 theme_override_fonts/font = ExtResource("1_onfsl")
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 16
 text = "Esc closes the menu"
 horizontal_alignment = 1
 
@@ -316,6 +316,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.7261458, 0.58133394, 0.12276965, 1)
 theme_override_fonts/font = ExtResource("1_onfsl")
-theme_override_font_sizes/font_size = 120
+theme_override_font_sizes/font_size = 80
 horizontal_alignment = 1
 vertical_alignment = 1

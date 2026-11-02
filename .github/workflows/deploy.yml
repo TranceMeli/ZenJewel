@@ -39,6 +39,7 @@ jobs:
           mkdir -p build/web
           godot --headless --path . --import || true
           godot --headless --path . --export-release "Web" build/web/index.html
+          cp font/PressStart2P-Regular.ttf build/web/   # used by the rotate hint in the page shell
           ls -la build/web
 
       - uses: actions/configure-pages@v5

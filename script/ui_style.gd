@@ -4,7 +4,7 @@
 class_name UIStyle
 extends RefCounted
 
-const FONT = preload("res://font/ARCADECLASSIC.TTF")
+const FONT = preload("res://font/PressStart2P-Regular.ttf")
 
 const PANEL      = Color(0.165, 0.114, 0.0)
 const PANEL_EDGE = Color(0.42, 0.31, 0.06)
@@ -29,7 +29,7 @@ static func box(bg: Color, edge: Color = Color(0, 0, 0, 0), radius: int = 8, bor
 
 
 ## Einheitlicher Button: primary = goldene Hauptaktion, sonst dunkel mit Rand.
-static func style_button(b: Button, primary: bool = false, size: int = 28) -> void:
+static func style_button(b: Button, primary: bool = false, size: int = 16) -> void:
 	b.add_theme_font_override("font", FONT)
 	b.add_theme_font_size_override("font_size", size)
 	b.focus_mode = Control.FOCUS_ALL

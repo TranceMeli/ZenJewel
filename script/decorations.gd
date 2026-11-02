@@ -4,7 +4,7 @@
 extends Node2D
 class_name Decorations
 
-const FONT      = preload("res://font/ARCADECLASSIC.TTF")
+const FONT      = preload("res://font/PressStart2P-Regular.ttf")
 const MIN_Y_PX  = 110.0   # unterhalb der TopBar
 
 var board: Node = null
@@ -205,21 +205,21 @@ func _build_hint_ui() -> void:
 	_hint_label = Label.new()
 	_hint_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_hint_label.add_theme_font_override("font", FONT)
-	_hint_label.add_theme_font_size_override("font_size", 28)
+	_hint_label.add_theme_font_size_override("font_size", 16)
 	box.add_child(_hint_label)
 
 	var done = Button.new()
 	done.text = "Done"
 	done.custom_minimum_size = Vector2(240, 52)
 	done.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	UIStyle.style_button(done, true, 28)
+	UIStyle.style_button(done, true, 16)
 	done.pressed.connect(stop_placing)
 	box.add_child(done)
 
 
 func _update_hint() -> void:
 	var def = Cosmetics.get_def(placing_id)
-	_hint_label.text = "%s   free %d\nTap to place    Tap an item to remove it" % [
+	_hint_label.text = "%s - free: %d\nTap to place, tap an item to remove it" % [
 		def.name, LevelManager.free_count(placing_id)
 	]
 

@@ -18,11 +18,11 @@ func _ready() -> void:
 	refresh_player_name()
 	menu_overlay.visible = false
 
-	UIStyle.style_button(menu_button, false, 28)
-	UIStyle.style_button(btn_resume, true, 32)
-	UIStyle.style_button(btn_shop, false, 32)
-	UIStyle.style_button(btn_sound, false, 32)
-	UIStyle.style_button(btn_exit, false, 32)
+	UIStyle.style_button(menu_button, false, 16)
+	UIStyle.style_button(btn_resume, true, 16)
+	UIStyle.style_button(btn_shop, false, 16)
+	UIStyle.style_button(btn_sound, false, 16)
+	UIStyle.style_button(btn_exit, false, 16)
 
 	menu_button.pressed.connect(_on_menu_button_pressed)
 	btn_resume.pressed.connect(_close_menu)
@@ -40,7 +40,7 @@ func _add_fullscreen_button() -> void:
 	var button = Button.new()
 	button.text = "Fullscreen"
 	button.custom_minimum_size = Vector2(0, 64)
-	UIStyle.style_button(button, false, 32)
+	UIStyle.style_button(button, false, 16)
 	button.pressed.connect(func():
 		var fullscreen = DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED if fullscreen

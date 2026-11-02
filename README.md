@@ -74,7 +74,8 @@ The design philosophy is **Zen Mode only**. No losing conditions, no time pressu
 - Start menu with continue, optional player name and saved progress
 - HUD with level badge and progress bar, score, gems and a menu button
 - Pause menu (Esc) with resume, shop, sound toggle and main menu
-- Interface text is in English, using the original pixel font
+- Interface text is in English, set in the Press Start 2P pixel font
+- Runs in the browser on desktop, phones and tablets (landscape), with a rotate hint in portrait
 
 **Visual & Audio** _(in development)_
 
@@ -106,6 +107,7 @@ The design philosophy is **Zen Mode only**. No losing conditions, no time pressu
 | FL Studio          | Music and sound design |
 | Affinity Designer  | UI layout and mockups  |
 | VS Code            | Code editing           |
+| Press Start 2P     | Interface font (SIL OFL) |
 
 ---
 
@@ -114,7 +116,7 @@ The design philosophy is **Zen Mode only**. No losing conditions, no time pressu
 ```
 res://
 ├── assets/
-├── font/
+├── font/                  Press Start 2P and its license
 ├── main_menu.gd           Start menu logic
 ├── scene/
 │   ├── main_menu.tscn    Start screen
@@ -193,4 +195,7 @@ Add an entry to `CATALOG` in `script/cosmetics.gd` with a name, price, atlas reg
 This project and all its assets (code, art, music) may not be copied, modified,
 distributed or used without explicit written permission from the author.
 
-Built with [Godot Engine](https://godotengine.org) (MIT License).
+## Credits
+
+- Built with [Godot Engine](https://godotengine.org) (MIT License).
+- Font: [Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P) by The Press Start 2P Project Authors, licensed under the SIL Open Font License 1.1, see `font/OFL.txt`. The license above covers the game's code, art and music, not the font.

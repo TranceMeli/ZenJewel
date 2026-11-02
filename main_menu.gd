@@ -13,9 +13,9 @@ const CORNER_MARGIN = 24.0
 
 func _ready() -> void:
 	_place_corner_jewels()
-	UIStyle.style_button(start_button, true, 40)
-	UIStyle.style_button(highlights_button, false, 32)
-	UIStyle.style_button(exit_button, false, 32)
+	UIStyle.style_button(start_button, true, 24)
+	UIStyle.style_button(highlights_button, false, 16)
+	UIStyle.style_button(exit_button, false, 16)
 	name_edit.add_theme_stylebox_override("normal", UIStyle.box(UIStyle.PANEL, UIStyle.PANEL_EDGE))
 	name_edit.add_theme_stylebox_override("focus", UIStyle.box(UIStyle.PANEL, UIStyle.GOLD))
 	name_edit.add_theme_color_override("font_color", UIStyle.TEXT)
@@ -60,7 +60,7 @@ func _place_corner_jewels() -> void:
 func _refresh_progress() -> void:
 	var has_progress = LevelManager.total_score > 0 or LevelManager.current_level > 1
 	start_button.text = "Continue" if has_progress else "Play"
-	progress_label.text = "Level %d    %d gems" % [LevelManager.current_level, LevelManager.currency] \
+	progress_label.text = "Level %d - %d gems" % [LevelManager.current_level, LevelManager.currency] \
 		if has_progress else "Match jewels at your own pace"
 
 
