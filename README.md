@@ -3,9 +3,12 @@
 A relaxing match-3 puzzle game built with Godot 4. No timers, no lives, no stress.
 Just play, match, and collect gems at your own pace.
 
+**[Play it here](https://trancemeli.github.io/ZenJewel/)** (runs in your browser, no install needed)
+
 <p align="left">
   <img src="https://img.shields.io/badge/Godot-4.x-478CBF?style=for-the-badge&logo=godot-engine&logoColor=white" />
   <img src="https://img.shields.io/badge/GDScript-Script-478CBF?style=for-the-badge" />
+  <a href="https://trancemeli.github.io/ZenJewel/"><img src="https://img.shields.io/badge/Play-in%20browser-1D9E75?style=for-the-badge" /></a>
   <img src="https://img.shields.io/badge/Version-0.2-1D9E75?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Status-Work%20In%20Progress-EF9F27?style=for-the-badge" />
   <img src="https://img.shields.io/badge/License-All%20Rights%20Reserved-E24B4A?style=for-the-badge" />
@@ -182,7 +185,6 @@ Add an entry to `CATALOG` in `script/cosmetics.gd` with a name, price, atlas reg
 - Highlights screen (personal bests: highest score, longest combo, biggest match)
 - More decorations, including items for the sky
 - Alternative jewel skin themes and a skin manager for full visual theme switching
-- Web build
 
 ---
 
