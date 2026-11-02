@@ -2,10 +2,10 @@
 extends Node
 class_name BoardUIBridge
 
-@onready var score_label         = get_node_or_null("../../UI/HUD/TopBar/HBoxContainer/BlockScore/VBoxContainer/ScoreValue")
-@onready var level_label         = get_node_or_null("../../UI/HUD/TopBar/HBoxContainer/BlockLevel/VBoxContainer/HBoxContainer/LevelValue")
-@onready var currency_label      = get_node_or_null("../../UI/HUD/TopBar/HBoxContainer/BlockGems/VBoxContainer/HBoxContainer/CurrencyValue")
-@onready var progress_bar        = get_node_or_null("../../UI/HUD/TopBar/HBoxContainer/BlockLevel/VBoxContainer/HBoxContainer/ProgressBar")
+@onready var score_label         = get_node_or_null("../../UI/HUD/TopBar/Row/ScoreBlock/ScoreValue")
+@onready var level_label         = get_node_or_null("../../UI/HUD/TopBar/Row/LevelBlock/LevelBadge")
+@onready var currency_label      = get_node_or_null("../../UI/HUD/TopBar/Row/RightBlock/GemsChip/Row/CurrencyValue")
+@onready var progress_bar        = get_node_or_null("../../UI/HUD/TopBar/Row/LevelBlock/LevelInfo/ProgressBar")
 @onready var combo_label         = get_node_or_null("../../UI/HUD/ComboLevel")
 @onready var level_overlay       = get_node_or_null("../../UI/LevelOverlay")
 @onready var level_overlay_label = get_node_or_null("../../UI/LevelOverlay/Label")
@@ -32,7 +32,7 @@ func refresh() -> void:
 func update_combo_label(combo: int) -> void:
 	if combo_label:
 		if combo > 1:
-			combo_label.text    = "COMBO  x%d" % combo
+			combo_label.text    = "Combo x%d" % combo
 			combo_label.visible = true
 		else:
 			combo_label.visible = false
@@ -54,7 +54,9 @@ func _on_currency_changed(amount: int) -> void:
 func _on_level_up(new_level: int, _goal: int) -> void:
 	# Board muss während des Übergangs blockiert sein.
 	# get_parent() ist hier der Board-Node selbst.
-	get_parent().is_busy = true
+	var board = get_parent()
+	board.lock_input()
+	board.effects.confetti()
 
 	if level_overlay and level_overlay_label:
 		level_overlay_label.text = "LEVEL  %d" % new_level
@@ -67,15 +69,21 @@ func _on_level_up(new_level: int, _goal: int) -> void:
 
 	await get_tree().create_timer(1.2).timeout
 
+	# Szene könnte währenddessen verlassen worden sein (z. B. Zurück ins Menü).
+	if not is_inside_tree():
+		return
+
 	if level_overlay:
 		var t_out = create_tween()
 		t_out.tween_property(level_overlay, "modulate:a", 0.0, 0.35) \
 			.set_trans(Tween.TRANS_SINE)
 		await t_out.finished
+		if not is_inside_tree():
+			return
 		level_overlay.visible = false
 
 	refresh()
-	get_parent().is_busy = false
+	board.unlock_input()
 
 
 func _format_score(s: int) -> String:
