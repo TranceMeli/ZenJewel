@@ -35,6 +35,7 @@ var special_scenes = {
 var grid:           Array = []
 var first_selected: Node  = null
 var is_busy:        bool  = false
+var input_locks:    int   = 0
 var combo:          int   = 0
 
 @onready var effects         : BoardEffects   = $BoardEffects
@@ -55,6 +56,9 @@ func _ready() -> void:
 	create_grid()
 	center_board()
 	ui_bridge.refresh()
+	is_busy = true
+	await _ensure_playable()
+	is_busy = false
 
 
 func create_grid() -> void:
@@ -134,8 +138,22 @@ func _create_specials(specials: Array) -> void:
 		_spawn_special(s.row, s.col, type)
 
 
+## UI-Overlays (Menü, Level-Up) sperren die Eingabe unabhängig von is_busy,
+## das nur der laufenden Kaskade gehört.
+func lock_input() -> void:
+	input_locks += 1
+
+
+func unlock_input() -> void:
+	input_locks = max(input_locks - 1, 0)
+
+
+func can_input() -> bool:
+	return not is_busy and input_locks == 0
+
+
 func on_jewel_clicked(jewel: Node) -> void:
-	if is_busy:
+	if not can_input():
 		return
 	if first_selected == jewel:
 		first_selected.set_selected(false)
@@ -182,7 +200,7 @@ func _try_swap(a: Node, b: Node) -> void:
 			)
 		else:
 			_create_specials(result.specials)
-			_resolve_matches(matches)
+			_resolve_matches(matches, result.runs)
 	)
 
 
@@ -219,31 +237,111 @@ func _resolve_special_swap(a: Node, b: Node) -> void:
 	var result = MatchFinder.find_matches(grid, ROWS, COLS, SpecialType.Type.NONE)
 	if not result.matched.is_empty():
 		_create_specials(result.specials)
-		await _resolve_matches(result.matched)
+		await _resolve_matches(result.matched, result.runs)
 	else:
-		is_busy = false
+		await _finish_turn()
 
 
-func _calculate_rewards(matches: Array) -> void:
-	var count      = matches.size()
+## Punkte und Münzen pro Run (Länge der Reihe), nicht pro gematchter Zelle.
+func _calculate_rewards(runs: Array) -> void:
 	var combo_mult = 1.0 + (combo * 0.5)
 	var pts        = 0
-	if   count >= 5: pts = POINTS_5 * (count - 4)
-	elif count == 4: pts = POINTS_4
-	else:            pts = POINTS_3 * (count / 3)
+	var coins      = 0
+	for length in runs:
+		if length >= 5:
+			pts   += POINTS_5 * (length - 4)
+			coins += COINS_5
+		elif length == 4:
+			pts   += POINTS_4
+			coins += COINS_4
+		else:
+			pts   += POINTS_3
+			coins += COINS_3
 	LevelManager.add_score(int(pts * combo_mult))
-
-	var coins = 0
-	if   count >= 5: coins = COINS_5
-	elif count == 4: coins = COINS_4
-	else:            coins = (count / 3) * COINS_3
 	LevelManager.add_currency(coins)
 
 	combo += 1
 
 
-func _resolve_matches(matches: Array) -> void:
-	_calculate_rewards(matches)
+func _finish_turn() -> void:
+	combo = 0
+	ui_bridge.update_combo_label(combo)
+	await _ensure_playable()
+	is_busy = false
+
+
+func _has_possible_move() -> bool:
+	for r in range(ROWS):
+		for c in range(COLS):
+			if grid[r][c] == null:
+				return true
+			if grid[r][c].special != SpecialType.Type.NONE:
+				return true
+			for d in [Vector2i(0, 1), Vector2i(1, 0)]:
+				var r2 = r + d.x
+				var c2 = c + d.y
+				if r2 >= ROWS or c2 >= COLS:
+					continue
+				_swap_cells(r, c, r2, c2)
+				var found = not MatchFinder.find_matches(grid, ROWS, COLS, SpecialType.Type.NONE).matched.is_empty()
+				_swap_cells(r, c, r2, c2)
+				if found:
+					return true
+	return false
+
+
+func _swap_cells(r1: int, c1: int, r2: int, c2: int) -> void:
+	var tmp = grid[r1][c1]
+	grid[r1][c1] = grid[r2][c2]
+	grid[r2][c2] = tmp
+	if grid[r1][c1]:
+		grid[r1][c1].row = r1
+		grid[r1][c1].col = c1
+	if grid[r2][c2]:
+		grid[r2][c2].row = r2
+		grid[r2][c2].col = c2
+
+
+func _ensure_playable() -> void:
+	if not _has_possible_move():
+		await _shuffle_board()
+
+
+func _shuffle_board() -> void:
+	var jewels: Array = []
+	for r in range(ROWS):
+		for c in range(COLS):
+			jewels.append(grid[r][c])
+
+	for attempt in range(100):
+		jewels.shuffle()
+		for i in range(jewels.size()):
+			var r = floori(float(i) / COLS)
+			var c = i % COLS
+			grid[r][c]   = jewels[i]
+			jewels[i].row = r
+			jewels[i].col = c
+		var no_matches = MatchFinder.find_matches(grid, ROWS, COLS, SpecialType.Type.NONE).matched.is_empty()
+		if no_matches and _has_possible_move():
+			break
+
+	var tween = create_tween()
+	tween.set_parallel(true)
+	for j in jewels:
+		tween.tween_property(j, "position", Vector2(j.col * CELL_SIZE, j.row * CELL_SIZE), 0.3) \
+			.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+	await tween.finished
+
+	# Fallback: falls nach 100 Versuchen noch Matches stehen, normal auflösen.
+	var result = MatchFinder.find_matches(grid, ROWS, COLS, SpecialType.Type.NONE)
+	if not result.matched.is_empty():
+		_create_specials(result.specials)
+		await _resolve_matches(result.matched, result.runs)
+
+
+func _resolve_matches(matches: Array, runs: Array) -> void:
+	_calculate_rewards(runs)
+	ui_bridge.update_combo_label(combo)
 
 	if combo > 1: _play(sound_combo)
 	else:         _play(sound_match)
@@ -263,12 +361,10 @@ func _resolve_matches(matches: Array) -> void:
 	if not result.matched.is_empty():
 		await get_tree().create_timer(0.08).timeout
 		_create_specials(result.specials)
-		await _resolve_matches(result.matched)
+		await _resolve_matches(result.matched, result.runs)
 		return
 
-	combo   = 0
-	is_busy = false
-	ui_bridge.update_combo_label(combo)
+	await _finish_turn()
 
 
 func _play(player) -> void:

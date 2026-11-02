@@ -79,7 +79,14 @@ static func find_matches(grid: Array, rows: int, cols: int, special_none) -> Dic
 			})
 			matched.erase("%d,%d" % [mid.row, mid.col])
 
+	var runs: Array = []
+	for run in h_runs:
+		runs.append(run.size())
+	for run in v_runs:
+		runs.append(run.size())
+
 	return {
 		"matched": matched.keys(),
-		"specials": specials
+		"specials": specials,
+		"runs": runs
 	}
