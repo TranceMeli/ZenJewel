@@ -30,6 +30,24 @@ func _ready() -> void:
 	btn_sound.pressed.connect(_on_sound_pressed)
 	btn_exit.pressed.connect(_on_exit_pressed)
 	_refresh_sound_button()
+	_add_fullscreen_button()
+
+
+## Phones and browsers have no F11, so the web build gets a menu button instead.
+func _add_fullscreen_button() -> void:
+	if not OS.has_feature("web"):
+		return
+	var button = Button.new()
+	button.text = "Fullscreen"
+	button.custom_minimum_size = Vector2(0, 64)
+	UIStyle.style_button(button, false, 32)
+	button.pressed.connect(func():
+		var fullscreen = DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED if fullscreen
+			else DisplayServer.WINDOW_MODE_FULLSCREEN)
+	)
+	btn_sound.get_parent().add_child(button)
+	btn_sound.get_parent().move_child(button, btn_sound.get_index() + 1)
 
 
 func refresh_player_name() -> void:

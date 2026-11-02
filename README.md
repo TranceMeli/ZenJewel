@@ -65,7 +65,7 @@ The design philosophy is **Zen Mode only**. No losing conditions, no time pressu
 **Shop and Decorations**
 
 - Buy decorations with gems (mushroom, tree trunk, rocket, more planned)
-- Place them on the meadow with a click, remove them with a right click
+- Place them on the meadow with a click or tap, remove them by clicking them again
 - Items stay where you put them between sessions
 - All cosmetics are purely visual, no gameplay advantage
 
@@ -91,8 +91,8 @@ The design philosophy is **Zen Mode only**. No losing conditions, no time pressu
 | ------------------------- | ---------------------------------- |
 | Select and swap jewels    | Left click two neighboring jewels  |
 | Open or close the menu    | `Esc` or the Menu button           |
-| Place a decoration        | Left click on the meadow           |
-| Remove a decoration       | Right click on it (placing mode)   |
+| Place a decoration        | Click or tap on the meadow         |
+| Remove a decoration       | Click or tap a placed item (placing mode) |
 | Leave placing mode        | `Esc` or the Done button           |
 
 ---

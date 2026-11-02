@@ -112,7 +112,9 @@ func _input(event: InputEvent) -> void:
 		if _hint_panel.get_global_rect().has_point(event.position):
 			return   # Klick auf den „Fertig“-Button, nicht auf das Feld
 		if event.button_index == MOUSE_BUTTON_LEFT:
-			_try_place()
+			# Tapping a placed item removes it (touch has no right click), otherwise place
+			if not _try_remove():
+				_try_place()
 			get_viewport().set_input_as_handled()
 		elif event.button_index == MOUSE_BUTTON_RIGHT:
 			_try_remove()
@@ -167,14 +169,15 @@ func _try_place() -> void:
 			stop_placing()
 
 
-func _try_remove() -> void:
+func _try_remove() -> bool:
 	var m = get_global_mouse_position()
 	for i in range(LevelManager.placed.size() - 1, -1, -1):
 		var p = LevelManager.placed[i]
 		if _item_rect(p.id, Vector2i(p.x, p.y)).has_point(m):
 			_puff(_item_rect(p.id, Vector2i(p.x, p.y)))
 			LevelManager.remove_placement(i)
-			return
+			return true
+	return false
 
 
 # --- Hinweis-Leiste ----------------------------------------------------------
@@ -216,7 +219,7 @@ func _build_hint_ui() -> void:
 
 func _update_hint() -> void:
 	var def = Cosmetics.get_def(placing_id)
-	_hint_label.text = "%s   frei %d\nKlick setzen    Rechtsklick entfernen    Esc fertig" % [
+	_hint_label.text = "%s   free %d\nTap to place    Tap an item to remove it" % [
 		def.name, LevelManager.free_count(placing_id)
 	]
 

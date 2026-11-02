@@ -17,7 +17,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 config/name="ZenJewel"
 run/main_scene="uid://dd1nmsrims26x"
 config/features=PackedStringArray("4.7", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="res://assets/icon_jewel.png"
 
 [autoload]
 

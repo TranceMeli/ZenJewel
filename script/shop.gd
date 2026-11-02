@@ -164,7 +164,7 @@ func _build() -> void:
 	var hint = PanelContainer.new()
 	hint.add_theme_stylebox_override("panel", UIStyle.box(UIStyle.PANEL, Color(0, 0, 0, 0), 8, 0))
 	column.add_child(hint)
-	var hint_label = _label("Buy an item then press Place   Left click places   Right click removes   Esc closes", 24, UIStyle.TEXT_DIM)
+	var hint_label = _label("Buy an item then press Place   Click to place   Click a placed item to remove it", 24, UIStyle.TEXT_DIM)
 	hint_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	hint.add_child(hint_label)
 
