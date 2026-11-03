@@ -101,18 +101,45 @@ func buy_cosmetic(id: String) -> bool:
 	owned[id] = owned_count(id) + 1
 	currency_changed.emit(currency)
 	cosmetics_changed.emit()
+	save_game()
+	return true
+
+
+## Sells one item back for the full price. An unplaced copy goes first,
+## otherwise the most recently placed one is taken off the meadow.
+func sell_cosmetic(id: String) -> bool:
+	if owned_count(id) <= 0:
+		return false
+	if free_count(id) <= 0:
+		for i in range(placed.size() - 1, -1, -1):
+			if placed[i].id == id:
+				placed.remove_at(i)
+				break
+	owned[id] = owned_count(id) - 1
+	currency += int(Cosmetics.get_def(id).price)
+	currency_changed.emit(currency)
 	cosmetics_changed.emit()
 	save_game()
 	return true
 
 
-func add_placement(id: String, x: int, y: int) -> bool:
+func add_placement(id: String, x: float, y: float, rot: int = 0) -> bool:
 	if not Cosmetics.exists(id) or free_count(id) <= 0:
 		return false
-	placed.append({"id": id, "x": x, "y": y})
+	placed.append({"id": id, "x": x, "y": y, "rot": posmod(rot, 4)})
 	cosmetics_changed.emit()
 	request_save()
 	return true
+
+
+func move_placement(index: int, x: float, y: float, rot: int) -> void:
+	if index < 0 or index >= placed.size():
+		return
+	placed[index].x   = x
+	placed[index].y   = y
+	placed[index].rot = posmod(rot, 4)
+	cosmetics_changed.emit()
+	request_save()
 
 
 func remove_placement(index: int) -> void:
@@ -245,9 +272,16 @@ func _load_cosmetics(data: Dictionary) -> void:
 				continue
 			placed.append({
 				"id": id,
-				"x": _to_int(p.get("x", 0), 0),
-				"y": _to_int(p.get("y", Cosmetics.GROUND_ROW), Cosmetics.GROUND_ROW),
+				"x": _to_float(p.get("x", 0), 0.0),
+				"y": _to_float(p.get("y", Cosmetics.GROUND_ROW), float(Cosmetics.GROUND_ROW)),
+				"rot": posmod(_to_int(p.get("rot", 0), 0), 4),
 			})
+
+
+func _to_float(value, fallback: float) -> float:
+	if typeof(value) == TYPE_INT or typeof(value) == TYPE_FLOAT:
+		return float(value)
+	return fallback
 
 
 func _to_int(value, fallback: int) -> int:

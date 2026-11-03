@@ -164,7 +164,7 @@ func _build() -> void:
 	var hint = PanelContainer.new()
 	hint.add_theme_stylebox_override("panel", UIStyle.box(UIStyle.PANEL, Color(0, 0, 0, 0), 8, 0))
 	column.add_child(hint)
-	var hint_label = _label("Buy an item, then press Place. Click to place, click a placed item to remove it.", 16, UIStyle.TEXT_DIM)
+	var hint_label = _label("Buy, place and rotate (R) items. Sell them any time for the full price.", 16, UIStyle.TEXT_DIM)
 	hint_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	hint.add_child(hint_label)
 
@@ -230,12 +230,15 @@ func _build_card(id: String) -> Control:
 	box.add_child(buttons)
 	var buy   = _button("Buy", true)
 	var place = _button("Place")
+	var sell  = _button("Sell")
 	buy.pressed.connect(_on_buy_pressed.bind(id))
+	sell.pressed.connect(_on_sell_pressed.bind(id))
 	place.pressed.connect(_on_place_pressed.bind(id))
 	buttons.add_child(buy)
 	buttons.add_child(place)
+	buttons.add_child(sell)
 
-	_cards[id] = {"info": info_label, "buy": buy, "place": place, "price": price_label}
+	_cards[id] = {"info": info_label, "buy": buy, "place": place, "sell": sell, "price": price_label}
 	return card
 
 
@@ -264,6 +267,8 @@ func _refresh() -> void:
 		card["buy"].disabled = not can_buy
 		# Place only makes sense once the player owns the item
 		card["place"].visible = owned > 0
+		card["sell"].visible  = owned > 0
+		card["sell"].text     = "Sell +%d" % price
 
 
 func _on_buy_pressed(id: String) -> void:
@@ -272,6 +277,12 @@ func _on_buy_pressed(id: String) -> void:
 		var button: Button = _cards[id]["buy"]
 		var at = button.get_global_rect().get_center()
 		FX.burst(_root, at, [UIStyle.GOLD, UIStyle.GOLD_HOVER, Color(1, 1, 1)], 22, 240.0, 8.0, 0.7)
+
+
+func _on_sell_pressed(id: String) -> void:
+	var price = int(Cosmetics.get_def(id).price)
+	if LevelManager.sell_cosmetic(id):
+		_show_toast("%s sold +%d gems" % [Cosmetics.get_def(id).name, price])
 
 
 func _show_toast(text: String) -> void:

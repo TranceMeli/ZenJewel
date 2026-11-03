@@ -30,7 +30,24 @@ func _ready() -> void:
 	btn_sound.pressed.connect(_on_sound_pressed)
 	btn_exit.pressed.connect(_on_exit_pressed)
 	_refresh_sound_button()
+	_add_edit_button()
 	_add_fullscreen_button()
+
+
+## Edit mode: drag placed items around the meadow.
+func _add_edit_button() -> void:
+	var button = Button.new()
+	button.text = "Edit meadow"
+	button.custom_minimum_size = Vector2(0, btn_shop.custom_minimum_size.y)
+	UIStyle.style_button(button, false, 16)
+	button.pressed.connect(func():
+		_close_menu()
+		var decorations = get_tree().get_first_node_in_group("decorations")
+		if decorations:
+			decorations.start_editing()
+	)
+	btn_shop.get_parent().add_child(button)
+	btn_shop.get_parent().move_child(button, btn_shop.get_index() + 1)
 
 
 ## Phones and browsers have no F11, so the web build gets a menu button instead.

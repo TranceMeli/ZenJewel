@@ -4,6 +4,8 @@ class_name Board
 const ROWS        = 8
 const COLS        = 8
 const CELL_SIZE   = 64
+const FLOOR_Y     = 832   # bottom edge of the dark pit in the frame
+const DISPLAY_SCALE = 1.3125   # 64 px cells drawn at 84 px
 const SWAP_SPEED  = 0.2
 const FALL_SPEED  = 0.12
 
@@ -86,15 +88,21 @@ func _safe_random_type(row: int, col: int) -> int:
 
 
 func center_board() -> void:
+	# The grid is drawn at DISPLAY_SCALE so it fills the pit; logic stays on CELL_SIZE
+	scale = Vector2.ONE * DISPLAY_SCALE
 	var vp     = get_viewport_rect().size
-	var base_x = (vp.x - COLS * CELL_SIZE) * 0.5
-	var base_y = (vp.y - ROWS * CELL_SIZE) * 0.5
-	global_position = Vector2(
-		base_x + (CELL_SIZE * 0.5),
-		base_y + (CELL_SIZE * 0.5)
-	)
+	var side   = CELL_SIZE * DISPLAY_SCALE
+	var base_x = (vp.x - COLS * side) * 0.5
+	var base_y = FLOOR_Y - ROWS * side   # the bottom row rests on the floor of the pit
+	global_position = Vector2(base_x + side * 0.5, base_y + side * 0.5)
 
-	
+
+## Screen rectangle covered by the grid.
+func grid_rect() -> Rect2:
+	var side = CELL_SIZE * DISPLAY_SCALE
+	return Rect2(global_position - Vector2.ONE * side * 0.5, Vector2(COLS, ROWS) * side)
+
+
 func _spawn_jewel(row: int, col: int, type: int) -> Node:
 	var jewel      = jewel_scenes[type].instantiate()
 	jewel.type     = type

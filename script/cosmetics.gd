@@ -19,17 +19,115 @@ const CATALOG = {
 		"ground": true,
 		"category": "Ground",
 	},
-	"stump": {
-		"name":   "Tree trunk",
-		"price":  60,
-		"region": Rect2(48, 48, 16, 16),
-		"ground": true,
-		"category": "Ground",
-	},
 	"rocket": {
 		"name":   "Rocket",
 		"price":  300,
 		"region": Rect2(0, 0, 16, 45),
+		"ground": true,
+		"category": "Ground",
+	},
+	# Items below use their own image ("file", optionally cropped by "region") and a per-item "scale"
+	"heart": {
+		"name":   "Heart",
+		"price":  40,
+		"file":   "res://assets/cosmetics/heart.png",
+		"scale":  3.0,
+		"ground": false,
+		"category": "Sky",
+	},
+	"tile_0_0": {
+		"name":   "Purple top",
+		"price":  20,
+		"file":   "res://assets/cosmetics/tileset_purple.png",
+		"region": Rect2(0, 0, 16, 16),
+		"scale":  6.0,
+		"ground": false,
+		"category": "Tiles",
+	},
+	"tile_1_0": {
+		"name":   "Purple sky",
+		"price":  20,
+		"file":   "res://assets/cosmetics/tileset_purple.png",
+		"region": Rect2(16, 0, 16, 16),
+		"scale":  6.0,
+		"ground": false,
+		"category": "Tiles",
+	},
+	"tile_2_0": {
+		"name":   "Orange diamond",
+		"price":  20,
+		"file":   "res://assets/cosmetics/lamps.png",
+		"region": Rect2(0, 0, 16, 16),
+		"scale":  6.0,
+		"ground": false,
+		"category": "Tiles",
+	},
+	"tile_0_1": {
+		"name":   "Orange lamp top",
+		"price":  20,
+		"file":   "res://assets/cosmetics/lamps.png",
+		"region": Rect2(16, 0, 16, 16),
+		"scale":  6.0,
+		"ground": false,
+		"category": "Tiles",
+	},
+	"tile_1_1": {
+		"name":   "Purple block",
+		"price":  20,
+		"file":   "res://assets/cosmetics/tileset_purple.png",
+		"region": Rect2(16, 16, 16, 16),
+		"scale":  6.0,
+		"ground": false,
+		"category": "Tiles",
+	},
+	"tile_2_1": {
+		"name":   "Purple wall",
+		"price":  20,
+		"file":   "res://assets/cosmetics/tileset_purple.png",
+		"region": Rect2(32, 16, 16, 16),
+		"scale":  6.0,
+		"ground": false,
+		"category": "Tiles",
+	},
+	"tile_0_2": {
+		"name":   "Lamp post",
+		"price":  20,
+		"file":   "res://assets/cosmetics/lamps.png",
+		"region": Rect2(32, 0, 16, 16),
+		"scale":  6.0,
+		"ground": true,
+		"category": "Tiles",
+	},
+	"tile_1_2": {
+		"name":   "Purple step",
+		"price":  20,
+		"file":   "res://assets/cosmetics/tileset_purple.png",
+		"region": Rect2(16, 32, 16, 16),
+		"scale":  6.0,
+		"ground": true,
+		"category": "Tiles",
+	},
+	"potion": {
+		"name":   "Potion",
+		"price":  80,
+		"file":   "res://assets/cosmetics/potion.png",
+		"scale":  0.96,
+		"ground": true,
+		"category": "Ground",
+	},
+	"yellow_post": {
+		"name":   "Ony_02",
+		"price":  50,
+		"file":   "res://assets/cosmetics/yellow_post.png",
+		"scale":  3.0,
+		"ground": true,
+		"category": "Ground",
+	},
+	"yellow_smiley": {
+		"name":   "Ony_01",
+		"price":  50,
+		"file":   "res://assets/cosmetics/yellow_smiley.png",
+		"scale":  3.0,
 		"ground": true,
 		"category": "Ground",
 	},
@@ -56,14 +154,24 @@ static func get_def(id: String) -> Dictionary:
 	return CATALOG.get(id, {})
 
 
-static func make_texture(id: String) -> AtlasTexture:
+static func make_texture(id: String) -> Texture2D:
+	var def: Dictionary = CATALOG[id]
+	if def.has("file") and not def.has("region"):
+		return load(def["file"])
 	var tex := AtlasTexture.new()
-	tex.atlas  = ATLAS
-	tex.region = CATALOG[id]["region"]
+	tex.atlas  = load(def["file"]) if def.has("file") else ATLAS
+	tex.region = def["region"]
 	return tex
 
 
-## Größe des Dekors auf dem Bildschirm in Pixeln.
-static func size_px(id: String) -> Vector2:
-	var region: Rect2 = CATALOG[id]["region"]
-	return region.size * PIXEL_SCALE
+## Scale factor from source pixels to screen pixels.
+static func scale_of(id: String) -> float:
+	return float(CATALOG[id].get("scale", PIXEL_SCALE))
+
+
+## Size on screen in pixels; quarter turns (rot 1 and 3) swap width and height.
+static func size_px(id: String, rot: int = 0) -> Vector2:
+	var def: Dictionary = CATALOG[id]
+	var src: Vector2 = def["region"].size if def.has("region") else make_texture(id).get_size()
+	var size = src * scale_of(id)
+	return Vector2(size.y, size.x) if rot % 2 != 0 else size
